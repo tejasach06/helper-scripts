@@ -258,7 +258,7 @@
     <header>
       <div class="header-badge">Systems &amp; Automation Tooling</div>
       <h1>Helper Scripts</h1>
-      <p class="subtitle">Production-engineered utilities for root-cause analysis, high-throughput log extraction, and Proxmox VE cluster inventory management.</p>
+      <p class="subtitle">Utilities for Linux diagnostics, log extraction, Proxmox VE inventory, and Windows profile migration.</p>
     </header>
 
     <main class="grid">
@@ -357,10 +357,36 @@
           <div class="code-content">./proxmox-inventory-extract -e https://10.0.0.1:8006 -u root@pam -o inventory.csv</div>
         </div>
       </article>
+
+      <article class="card">
+        <div class="card-top">
+          <div class="card-title-group">
+            <div class="card-title">windows-profile-migration</div>
+            <div class="badges">
+              <span class="badge lang-py">Windows PowerShell</span>
+              <span class="badge">7-Zip</span>
+              <span class="badge">Profile migration</span>
+            </div>
+          </div>
+          <a href="https://github.com/tejasach06/windows-profile-migration" class="btn-github" target="_blank" rel="noopener noreferrer">View Repository</a>
+        </div>
+        <p class="description">
+          Back up Windows profile files to a 7-Zip archive and merge them into another computer's profile. Includes known folders, user-created directories, AppData\Roaming, standard-location Outlook PST files, and browser bookmark recovery.
+        </p>
+        <ul class="features-list">
+          <li>Skip existing destination files</li>
+          <li>Resolve signed-in user folder redirection</li>
+          <li>Attempt Chromium bookmark merging</li>
+          <li>Unencrypted archives. Review restore precautions before use.</li>
+        </ul>
+        <div class="code-block">
+          <div class="code-content">.\Migrate-UserProfile.ps1 -Mode Backup -ArchivePath "E:\ProfileBackup.7z"</div>
+        </div>
+      </article>
     </main>
 
     <footer>
-      <p>Maintained by <a href="https://github.com/tejasach06" target="_blank">tejasach06</a> &bull; Production Linux Systems &amp; Automation</p>
+      <p>Maintained by <a href="https://github.com/tejasach06" target="_blank">tejasach06</a> &bull; Systems &amp; Automation</p>
     </footer>
   </div>
 </body>

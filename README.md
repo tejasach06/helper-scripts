@@ -1,6 +1,6 @@
 # Helper Scripts
 
-Production-engineered utilities for Linux root-cause analysis, high-throughput log extraction, and Proxmox VE cluster inventory management.
+Utilities for Linux diagnostics, log extraction, Proxmox VE inventory, and Windows profile migration.
 
 Hosted GitHub Pages: **[https://tejasach06.github.io/helper-scripts/](https://tejasach06.github.io/helper-scripts/)**
 
@@ -25,3 +25,10 @@ High-performance inventory exporter for Proxmox VE hypervisors and clusters. Ext
 
 - **Stack**: Rust CLI + fallback Python implementation
 - **Features**: Asynchronous parallel fetching via Tokio, API token and ticket auth, automatic guest IP/MAC resolution, multi-pool storage volume discovery.
+
+### 4. [windows-profile-migration](https://github.com/tejasach06/windows-profile-migration)
+Back up a Windows user profile to a 7-Zip archive and merge its files into another computer's profile. Includes known folders, user-created profile directories, AppData\Roaming, standard-location Outlook PST files, and browser bookmark recovery.
+
+- **Stack**: Windows PowerShell and 7-Zip
+- **Behavior**: Skip existing destination files, resolve signed-in user folder redirection, and attempt Chromium bookmark merging.
+- **Precautions**: Archives are unencrypted. Keep a separate backup and review the project's documented restore limitations before use.
