@@ -32,3 +32,28 @@ Back up a Windows user profile to a 7-Zip archive and merge its files into anoth
 - **Stack**: Windows PowerShell and 7-Zip
 - **Behavior**: Skip existing destination files, resolve signed-in user folder redirection, and attempt Chromium bookmark merging.
 - **Precautions**: Archives are unencrypted. Keep a separate backup and review the project's documented restore limitations before use.
+
+## Maintain the Pages runner
+
+The `Deploy Pages` workflow publishes the repository root without a site generator. Keep `index.html` at the root. If a custom domain is added, keep its `CNAME` file there too.
+
+Packaging and deployment run on `vm101-helper-scripts`, the repository's rootless Podman runner on VM101. Its labels are `self-hosted`, `Linux`, `X64`, `vm101`, and `podman`. The runner does not need a Docker socket. The workflow uses SHA-pinned official actions with Node.js 24 runtimes, including the upload action called by `upload-pages-artifact`.
+
+1. In **Settings > Actions > Runners**, confirm that the repository runner is online and has all five labels.
+2. Keep its container image and Actions Runner current. Node.js 24 actions require Actions Runner 2.327.1 or later.
+3. After runner maintenance, select **Actions > Deploy Pages > Run workflow** and use `main`.
+4. Confirm that both jobs use the VM101 runner and that the `github-pages` deployment succeeds.
+
+On VM101, run these commands as `tejas` to inspect or restart the runner:
+
+```sh
+	systemctl --user status github-runner-helper-scripts.service
+	journalctl --user -u github-runner-helper-scripts.service -n 100
+	systemctl --user restart github-runner-helper-scripts.service
+```
+
+The Quadlet is `~/.config/containers/systemd/github-runner-helper-scripts.container`. It uses the shared `localhost/github-runner:latest` image. Registration state and work files are separate directories under `/mnt/data/podman-rootless/github-runner/`: `state-helper-scripts` and `work-helper-scripts`. Preserve the registration state during image updates.
+
+Only pushes to `main` and manual runs on `main` can publish. Do not add pull request triggers or remove the main-branch guards from this homelab runner workflow. Keep **Settings > Pages > Build and deployment > Source** set to **GitHub Actions** and keep `main` allowed in the `github-pages` environment.
+
+To return to branch publishing, set the Pages source to **Deploy from a branch**, choose `main` and `/ (root)`, and disable `Deploy Pages`. Before this migration, no custom domain was configured and HTTPS was enforced.
